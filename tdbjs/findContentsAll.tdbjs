@@ -1,0 +1,25 @@
+var db_nm = "contents";
+var col_nm = "all";
+var page = <!=PAGE=!>
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+var listCnt = 24;
+
+//collection data all remove;
+
+var sort = {}
+    sort._id = -1;
+
+var _q = {};
+var limit = listCnt;
+
+var skip = ( page - 1 ) * listCnt
+
+var r = [] 
+col0.find({}).sort( sort ).limit( limit ).skip( skip ).forEach(function(item){
+    r.push( item )   
+})
+
+printjson( r )

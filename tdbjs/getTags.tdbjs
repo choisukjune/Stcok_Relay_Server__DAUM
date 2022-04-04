@@ -1,0 +1,9 @@
+var db_nm = "info";
+var col_nm = "info";
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+var r = col0.findOne({},{_id:0})
+
+printjson( r )

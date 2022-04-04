@@ -1,0 +1,15 @@
+var brand_nm = "<!=BRAND_NM=!>";
+
+var db0 = db.getSiblingDB("Report");
+var col0 = db0.getCollection( brand_nm );
+
+var r = [],_to;
+col0.find().sort({_id:-1}).forEach(function(doc){
+    _to = {
+        year : doc.target_year
+        , month : doc.target_month
+    }
+    r.push( _to );
+});
+
+printjson( r )

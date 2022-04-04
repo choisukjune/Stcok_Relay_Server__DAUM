@@ -1,0 +1,30 @@
+var db_nm = "stock_agency";
+var col_nm = "<!=COL_NM=!>";
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+//collection data all remove;
+col0.remove({});
+
+var a = <!=DATA=!>
+
+var _ta = [];
+var i = 0,iLen = a.length,io;
+for(;i<iLen;++i){
+	io = a[ i ];
+	//io._id = NumberInt( io._id );
+	if( _ta.length == 500 )
+	{
+		col0.insertMany( _ta );
+		_ta.length = 0;
+	}
+	else
+	{
+		_ta.push( io );
+	}
+	
+}
+col0.insertMany( _ta );
+
+printjson( 1 )

@@ -1,0 +1,58 @@
+var db_nm = "data";
+var col_nm = "all";
+var page = <!=PAGE=!>
+var limit =<!=LIMIT=!>
+var keyword = decodeURIComponent("<!=TAG=!>")
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+//collection data all remove;
+
+
+var sort = {};
+//      sort[ "crwaling_date_o.timeStamp" ] = -1;
+//      sort[ "saleRatio" ] = -1;
+
+//var _q = {
+//    $or : [
+//              { nm : { $regex : keyword, '$options': 'i'  } },
+//              { brand : { $regex : keyword, '$options': 'i'  } },
+//              { info : { $in : [ keyword ] } },
+////            { $text: { $search: keyword } }
+//      ]
+//}
+
+var _q = {
+    $or : [
+//              { _search_ : { $regex : keyword, '$options': 'i'  } },
+//              { $text: { $search: keyword } },
+                { info : { $in : [ keyword ] } },
+
+        ]
+}
+var _p = { _id : 0 }
+var skip = ( page - 1 ) * limit
+
+var cnt = col0.find( _q ).count();
+var r = []
+var _tags = {};
+var brands = [];
+
+col0.find( _q, _p  ).sort( sort ).limit( limit ).skip( skip ).forEach(function(item){
+    r.push( item )
+
+        var i = 0,iLen = item.info.length,io;
+        for(;i<iLen;++i){
+                io = item.info[ i ]
+                if( _tags[ io ] ) _tags[ io ] = _tags[ io ] + 1;
+                else _tags[ io ] = 1;
+        }
+		if( brands.indexOf( item.brand ) == -1 ) brands.push( item.brand );
+})
+
+var allTags = Object.keys(_tags).sort(function(a,b){return _tags[b]-_tags[a]});
+var tags = allTags.slice(0,20);
+
+
+printjson({cnt : cnt, r : r, tags : tags, brands : brands, allTags : allTags })

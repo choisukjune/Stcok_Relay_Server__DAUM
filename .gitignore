@@ -1,0 +1,11 @@
+# directory
+DataBase/0/
+Log/
+node_modules/
+data/
+
+# files
+
+*.result
+_cmd.exe
+package-lock.json

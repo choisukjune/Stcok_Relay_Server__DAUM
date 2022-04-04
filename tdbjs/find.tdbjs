@@ -1,0 +1,23 @@
+var db_nm = "data";
+var col_nm = "<!=BRAND_NM=!>";
+var page = <!=PAGE=!>
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+//collection data all remove;
+
+var sort = {}
+    sort._id = -1;
+
+var _q = {};
+var limit = 30;
+
+var skip = ( page - 1 ) * 30
+
+var r = [] 
+col0.find({}).sort( sort ).limit( limit ).skip( skip ).forEach(function(item){
+    r.push( item )   
+})
+
+printjson( r )

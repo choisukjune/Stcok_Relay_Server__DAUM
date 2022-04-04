@@ -1,0 +1,23 @@
+var db_nm = "data";
+var col_nm = "<!=BRAND_NM=!>";
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+//collection data all remove;
+col0.remove({});
+
+var _o = <!=DATA=!>
+
+var s,so;
+for( s in _o ){
+    so = _o[ s ];
+    so._id = NumberInt( s );
+    if( so.brand != "" )
+    {
+        so.info.push( so.brand )
+    }
+    col0.insert( so );
+}
+
+printjson( 1 )

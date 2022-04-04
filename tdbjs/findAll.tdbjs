@@ -1,0 +1,28 @@
+var db_nm = "data";
+var col_nm = "all";
+var page = <!=PAGE=!>
+var limit =<!=LIMIT=!>
+
+var db0 = db.getSiblingDB( db_nm );
+var col0 = db0.getCollection( col_nm );
+
+//collection data all remove;
+
+var sort = {}
+//	sort[ "crwaling_date_o.timeStamp" ] = -1;
+	sort[ "saleRatio" ] = -1;
+
+var _q = {}
+    //_q.info = { $in : [ "<!=TAG=!>" ] };
+
+
+var skip = ( page - 1 ) * limit
+
+var cnt = col0.find( _q ).count();
+var r = []
+
+col0.find( _q ).sort( sort ).limit( limit ).skip( skip ).forEach(function(item){
+    r.push( item )   
+})
+
+printjson({cnt : cnt, r : r })

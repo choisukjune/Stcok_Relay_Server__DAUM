@@ -1,0 +1,9 @@
+var brand_nm = "<!=BRAND_NM=!>";
+var target_date = <!=TARGET_DATE=!>
+
+var db0 = db.getSiblingDB("Planning");
+var col0 = db0.getCollection( brand_nm );
+
+var r = col0.findOne({ _id : target_date });
+
+printjson( r )
